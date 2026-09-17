@@ -45,3 +45,19 @@ clean:
 	rm main.o calculator.o logger.o
 ```
 >从根部至分支，检查时间戳再执行的好处：遇到新的->检查其底下有没有新的->一路检查再从下往上执行,这样不需要改的就会被跳过提高了效率
+
+```bash
+# 设置cmake最低版本要求
+cmake_minimum_required(VERSION 3.16)
+
+# 定义项目名calculator，项目编程语言C语言
+project(calculator LANGUAGES C)
+
+# 创建可执行程序目标：名字calculator，源码是src/main.c 和 src/calculator.c
+add_executable(calculator src/main.c src/calculator.c)
+# 给calculator这个目标添加头文件搜索目录
+# PRIVATE：这个头文件目录只供calculator自己编译使用，不会暴露给别的依赖它的项目
+# ${PROJECT_SOURCE_DIR} 是cmake内置变量：代表源码根目录（CMakeLists.txt所在目录）
+# ${PROJECT_SOURCE_DIR}/include 拼接得到源码目录下的include文件夹
+target_include_directories(calculator PRIVATE ${PROJECT_SOURCE_DIR}/include)
+```
